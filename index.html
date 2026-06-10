@@ -47,7 +47,7 @@
 
   .topic-scroll { flex:1; overflow-y:auto; padding-bottom:1rem; }
 
-  .story-box { background:linear-gradient(135deg,#4c1d95,#6d28d9); border:3px solid rgba(255,255,255,.25); border-radius:20px; padding:1.5rem; color:#fff; font-size:18px; font-family:'Nunito', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; font-weight:700; line-height:1.7; flex:1; margin-bottom:1.5rem; overflow-y:auto; min-height:200px; box-shadow:0 8px 24px rgba(79,0,200,.4),inset 0 1px 0 rgba(255,255,255,.15); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; text-align:center; }
+  .story-box-old { display:none; font-family:'Nunito', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; font-weight:700; line-height:1.7; flex:1; margin-bottom:1.5rem; overflow-y:auto; min-height:200px; box-shadow:0 8px 24px rgba(79,0,200,.4),inset 0 1px 0 rgba(255,255,255,.15); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; text-align:center; }
   .story-box.has-story { text-align:left; justify-content:flex-start; align-items:flex-start; }
   .story-title { font-size:22px; font-family:'Fredoka One', 'Varela Round', 'Trebuchet MS', 'Arial Rounded MT Bold', Arial, sans-serif; color:#fde68a; text-shadow:0 2px 0 rgba(0,0,0,.3); text-align:center; margin-bottom:1rem; letter-spacing:1px; width:100%; font-weight:900; }
   .story-text { font-size:17px; line-height:1.75; }
@@ -61,7 +61,7 @@
   <!-- START -->
   <div class="screen active" id="startScreen">
     <div class="start-content">
-      <button class="btn btn-play" onclick="startGame()" style="font-size:24px;padding:18px;letter-spacing:2px;">Start Game</button>
+      <button class="btn btn-yellow" onclick="startGame()" style="font-size:24px;padding:18px;letter-spacing:2px;">Start Game</button>
     </div>
   </div>
 
@@ -135,10 +135,13 @@
         <div id="progressBar" style="height:100%;width:0%;background:linear-gradient(90deg,#16a34a,#22c55e,#4ade80);box-shadow:0 0 12px rgba(34,197,94,0.9);transition:width 0.3s ease;"></div>
       </div>
     </div>
-    <div class="screen-inner">
-      <div class="story-box" id="storyBox">
-        <div class="spinner"></div>
-        <span style="font-size:15px;opacity:.8;">Writing your story...</span>
+    <div class="screen-inner" style="justify-content:space-between;">
+      <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
+        <div class="topic-top" id="storyTopicTop"></div>
+        <div class="big-game-title" id="storyTitleEl" style="font-size:28px;margin-bottom:1rem;"></div>
+        <div id="storyBox" style="flex:1;overflow-y:auto;color:#fff;font-family:Arial,Helvetica,sans-serif;font-size:17px;line-height:1.75;margin-bottom:1rem;">
+          <div class="spinner" style="margin:2rem auto;"></div>
+        </div>
       </div>
       <button class="btn btn-yellow" onclick="newGame()">New Game</button>
     </div>
