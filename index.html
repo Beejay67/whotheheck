@@ -460,8 +460,39 @@
     }
   }
 
+  var showingWannabes = false;
+
+  function toggleWannabes() {
+    showingWannabes = !showingWannabes;
+    var storyBox = document.getElementById('storyBox');
+    var wannabeBox = document.getElementById('wannabeBox');
+    var btn = document.getElementById('wannabeBtn');
+
+    if (showingWannabes) {
+      storyBox.style.display = 'none';
+      wannabeBox.style.display = 'block';
+      btn.textContent = 'Story';
+      // Build wannabe list
+      var names = state.characters.map(function(n) {
+        return '<div style="font-family:'Fredoka One',cursive;font-size:22px;color:#fff;padding:6px 0;text-shadow:0 2px 0 rgba(0,0,0,0.3);">' + n + '</div>';
+      }).join('');
+      wannabeBox.innerHTML = names;
+    } else {
+      storyBox.style.display = 'block';
+      wannabeBox.style.display = 'none';
+      btn.textContent = 'Wannabes';
+    }
+  }
+
   function newGame() {
     state = { topic: '', characters: [] };
+    showingWannabes = false;
+    var btn = document.getElementById('wannabeBtn');
+    if (btn) btn.textContent = 'Wannabes';
+    var sb = document.getElementById('storyBox');
+    var wb = document.getElementById('wannabeBox');
+    if (sb) sb.style.display = 'block';
+    if (wb) wb.style.display = 'none';
     goTo('startScreen');
   }
 
