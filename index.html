@@ -62,7 +62,7 @@
   <div class="screen active" id="startScreen">
     <div class="start-content" style="display:flex;flex-direction:column;align-items:center;gap:14px;">
       <button class="btn btn-yellow" onclick="startGame()" style="font-size:24px;padding:18px 32px;letter-spacing:2px;width:auto;">Start Game</button>
-      <div style="color:#fff;font-family:Arial,Helvetica,sans-serif;font-size:20px;font-weight:bold;text-align:center;text-shadow:0 2px 4px rgba(0,0,0,0.5);background:rgba(0,0,0,0.3);border-radius:12px;padding:10px 20px;">Spot the liar next to you</div>
+      <div style="color:#fff;font-family:Arial,Helvetica,sans-serif;font-size:20px;font-weight:bold;text-align:center;text-shadow:0 2px 4px rgba(0,0,0,0.5);background:rgba(0,0,0,0.3);border-radius:12px;padding:10px 20px;">Hide your identity. Unmask your friends.</div>
     </div>
   </div>
 
@@ -211,12 +211,13 @@
         <div style="width:100%;background:rgba(0,0,0,0.2);border-radius:16px;padding:16px 20px;text-align:center;margin-bottom:1.2rem;">
           <span style="font-family:Arial,Helvetica,sans-serif;font-size:17px;color:#fff;line-height:1.7;">Noah's Ark is nearly full. Only one final seat remains on the ultimate cruise. Which bizarre creature will snag the last ticket? Decode the animals clues, unmask your opponents and claim your spot before the storm hits!</span>
         </div>
-        <select style="width:100%;padding:14px 44px 14px 18px;border-radius:16px;background:rgba(0,0,0,0.3);color:#fff;font-size:18px;font-family:Arial,Helvetica,sans-serif;font-weight:bold;border:2px solid rgba(255,255,255,0.3);cursor:pointer;outline:none;appearance:none;-webkit-appearance:none;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='white' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E&quot;);background-repeat:no-repeat;background-position:right 14px center;background-size:24px;">
-          <option value="">Coming soon...</option>
+        <select id="noahsModeSelect" style="width:100%;padding:14px 44px 14px 18px;border-radius:16px;background:rgba(0,0,0,0.3);color:#fff;font-size:18px;font-family:Arial,Helvetica,sans-serif;font-weight:bold;border:2px solid rgba(255,255,255,0.3);cursor:pointer;outline:none;appearance:none;-webkit-appearance:none;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='white' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E&quot;);background-repeat:no-repeat;background-position:right 14px center;background-size:24px;">
+          <option value="synonyms">Synonyme (keine Tiernamen)</option>
+          <option value="names">Tiernamen</option>
         </select>
       </div>
       <div style="width:100%;display:flex;flex-direction:column;align-items:center;gap:14px;padding-top:2rem;">
-        <button onclick="alert('Coming soon!')" style="width:100%;padding:18px;border-radius:16px;background:linear-gradient(to bottom,#fde68a,#f59e0b);color:#000;font-size:24px;font-family:Arial,Helvetica,sans-serif;font-weight:900;border:none;cursor:pointer;box-shadow:0 6px 0 #b45309;">Play</button>
+        <button onclick="startNoahsList()" style="width:100%;padding:18px;border-radius:16px;background:linear-gradient(to bottom,#fde68a,#f59e0b);color:#000;font-size:24px;font-family:Arial,Helvetica,sans-serif;font-weight:900;border:none;cursor:pointer;box-shadow:0 6px 0 #b45309;">Play</button>
         <a onclick="goTo('howtoScreen');setPrevScreen('introNoahs');" style="color:#fde68a;font-family:Arial,Helvetica,sans-serif;font-size:17px;font-weight:bold;text-decoration:underline;cursor:pointer;">How to play</a>
       </div>
     </div>
@@ -296,7 +297,7 @@
     <div class="screen-inner" style="justify-content:space-between;">
       <div>
         <div class="topic-top" id="topicTop"></div>
-        <div class="big-game-title">Who do you<br>wanna be?</div>
+        <div class="big-game-title" id="charScreenTitle">Who do you<br>wanna be?</div>
         <input class="game-input" id="charInput" placeholder="Drop your alias..." />
         <button class="btn btn-blue" onclick="saveChar()">Enter and pass</button>
       </div>
@@ -425,6 +426,7 @@
   function selectTopic(topic) {
     state.topic = topic;
     state.characters = [];
+    document.getElementById('charScreenTitle').textContent = 'Who do you wanna be?';
     updateCharScreen();
     goTo('charScreen');
   }
@@ -651,6 +653,19 @@
       wannabeBox.style.display = 'none';
       btn.textContent = 'Wannabes';
     }
+  }
+
+  var noahsMode = 'synonyms';
+
+  function startNoahsList() {
+    noahsMode = document.getElementById('noahsModeSelect').value;
+    setTheme('blue_dark');
+    state.topic = 'Noahs List';
+    state.characters = [];
+    // Set special char screen title
+    document.getElementById('charScreenTitle').textContent = 'What animal are you?';
+    updateCharScreen();
+    goTo('charScreen');
   }
 
   function startWannabeWorld() {
