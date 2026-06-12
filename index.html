@@ -518,7 +518,18 @@
     var list = shuffled.join(', ');
     var count = shuffled.length;
 
-    var prompt = 'Write a short, funny story in German (approx. 120 words) set in the scenario: "' + state.topic + '".\n\nCharacters to use (ONLY these): ' + list + '\n\nSTRICT RULES:\n1. Use ONLY and EXACTLY the ' + count + ' characters listed above. Zero other names allowed.\n2. Each character name appears EXACTLY ONCE.\n3. Bold each name with **Name** when it appears.\n4. Characters interact naturally.\n5. Funny, with a punchline at the end.\n6. First line: a funny title (plain text). Then blank line. Then story.';
+    var prompt;
+    if (state.topic === 'Noahs List') {
+      var useSynonyms = (noahsMode === 'synonyms');
+      if (useSynonyms) {
+        var mappingLines = shuffled.map(function(a) { return '- ' + a + ' → [erfinde ein lustiges 2-3-Wort-Äquivalent]'; }).join('\n');
+        prompt = 'Schreibe eine humorvolle Slapstick-Geschichte auf Deutsch (max. 250 Wörter) für das Spiel Arche Noah.\n\nTiere der Spieler: ' + list + '\n\nVOR dem Schreiben: Erfinde intern für jedes Tier ein lustiges 2-3-Wort-Äquivalent basierend auf seiner markantesten Eigenschaft:\n' + mappingLines + '\n\nBeispiele für gute Äquivalente: Tiger→"gestreifter Fleischwolf", Pinguin→"tollpatschiger Frack-Träger", Elefant→"lebender Rüssel-Bagger", Flamingo→"einbeinige Stelzen-Diva".\n\nSchreibe jetzt die Geschichte mit NUR diesen Äquivalenten. Die echten Tiernamen [' + list + '] dürfen im Text NICHT vorkommen – kein einziges Mal.\n\nRegeln:\n- Rahmen: Flut steigt, Noah an der Rampe, Ende mit "nur noch ein Platz frei"\n- Jedes Tier hat 1-2 Sätze chaotischen Auftritt\n- Fließtext, keine Listen\n- Jedes Äquivalent beim ersten Auftreten in **Fettschrift**\n- Erste Zeile: witziger Titel. Dann Leerzeile. Dann Geschichte.';
+      } else {
+        prompt = 'Schreibe eine humorvolle Slapstick-Geschichte auf Deutsch (max. 250 Wörter) für das Spiel Arche Noah.\n\nTiere der Spieler: ' + list + '\n\nRegeln:\n- Verwende die Tiernamen mit korrektem deutschen Artikel (der/die/das) – NICHT als Eigennamen\n- Rahmen: Flut steigt, Noah an der Rampe, Ende mit "nur noch ein Platz frei"\n- Jedes Tier hat 1-2 Sätze chaotischen Auftritt basierend auf seiner biologischen Eigenheit\n- Fließtext, keine Listen\n- Jeden Tiernamen beim ersten Auftreten mit Artikel in **Fettschrift**: z.B. **der Tiger**, **die Schlange**\n- Erste Zeile: witziger Titel. Dann Leerzeile. Dann Geschichte.';
+      }
+    } else {
+      prompt = 'Write a short, funny story in German (approx. 120 words) set in the scenario: "' + state.topic + '".\n\nCharacters to use (ONLY these): ' + list + '\n\nSTRICT RULES:\n1. Use ONLY and EXACTLY the ' + count + ' characters listed above. Zero other names allowed.\n2. Each character name appears EXACTLY ONCE.\n3. Bold each name with **Name** when it appears.\n4. Characters interact naturally.\n5. Funny, with a punchline at the end.\n6. First line: a funny title (plain text). Then blank line. Then story.';
+    }
 
     try {
       var raw = '';
